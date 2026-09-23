@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Etkinliği Güncelle | Kampüs Etkinlikleri</title>
+</head>
+<body>
+  <header>
+    <h1>Etkinliği Güncelle</h1>
+    <p>Kariyer Günleri 2026 bilgilerini düzenle.</p>
+  </header>
+
+  <nav aria-label="Ana menü">
+    <a href="index.html">Ana Sayfa</a>
+    <a href="etkinlikler.html">Etkinlikler</a>
+    <a href="kariyer-gunleri-2026.html">Detay</a>
+    <a href="etkinlik-ekle.html">Etkinlik Ekle</a>
+  </nav>
+
+  <main>
+    <form action="#" method="get">
+      <p>
+        <label for="etkinlik-adi">Etkinlik Adı</label><br>
+        <input type="text" id="etkinlik-adi" name="ad" value="Kariyer Günleri 2026" required>
+      </p>
+
+      <p>
+        <label for="kategori">Kategori</label><br>
+        <select id="kategori" name="kategori" required>
+          <option value="seminer" selected>Seminer</option>
+          <option value="atolye">Atölye</option>
+          <option value="konferans">Konferans</option>
+          <option value="sosyal">Sosyal etkinlik</option>
+        </select>
+      </p>
+
+      <p>
+        <label for="tarih-saat">Tarih / Saat</label><br>
+        <input type="datetime-local" id="tarih-saat" name="tarih" value="2026-10-12T14:00" required>
+      </p>
+
+      <p>
+        <label for="yer">Yer</label><br>
+        <input type="text" id="yer" name="yer" value="A Blok Konferans Salonu" required>
+      </p>
+
+      <p>
+        <label for="aciklama">Açıklama</label><br>
+        <textarea id="aciklama" name="aciklama" rows="4" cols="40" required>Öğrenciler ve mezunlar farklı meslek alanlarından konuşmacılarla buluşacak; kariyer planlama ve sektördeki fırsatlar üzerine konuşacak.</textarea>
+      </p>
+
+      <button type="submit">Güncelle</button>
+    </form>
+  </main>
+
+  <footer>
+    <p>Ad Soyad · 20XXXXXX · 2026</p>
+    <p><a href="kariyer-gunleri-2026.html">Etkinlik detayına dön</a></p>
+  </footer>
+</body>
+</html>
