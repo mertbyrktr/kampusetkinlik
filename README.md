@@ -2,6 +2,10 @@
 
 Kampüs etkinliklerini listelemek, etkinlik ayrıntılarını görüntülemek ve etkinlik bilgilerini ekleme veya güncelleme formlarıyla düzenlemek için hazırlanmış basit bir HTML projesi.
 
+## Vercel Canlı Bağlantı
+
+- https://kampusetkinlik.vercel.app
+
 ## Projeyi açma
 
 Yerel olarak `sprint1/index.html` dosyasını tarayıcıda açın. Proje statik HTML sayfalarından oluşur; derleme adımı veya CSS/JavaScript gerektirmez.
