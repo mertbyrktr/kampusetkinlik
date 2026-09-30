@@ -1,0 +1,219 @@
+/* Ahmet Mert Bayraktar — 2321032070 */
+:root {
+  --no: 2321032070;
+  --ton: mod(var(--no), 360);
+  --renk-ana: hsl(var(--ton) 65% 38%);
+  --renk-zemin: hsl(var(--ton) 30% 97%);
+  --font: Arial, sans-serif;
+  --bosluk-m: 1rem;
+  --kose: 8px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--renk-zemin);
+  font-family: var(--font);
+  line-height: 1.6;
+}
+
+header,
+nav,
+main,
+footer {
+  width: 90%;
+  max-width: 70rem;
+  margin: 0 auto;
+}
+
+header {
+  padding: var(--bosluk-m) 0;
+}
+
+header h1 {
+  margin-bottom: 0;
+  color: var(--renk-ana);
+}
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--bosluk-m);
+  padding: var(--bosluk-m);
+  border-radius: var(--kose);
+  background: var(--renk-ana);
+}
+
+nav a {
+  color: var(--renk-zemin);
+  font-weight: bold;
+  text-decoration: none;
+}
+
+main {
+  padding: var(--bosluk-m) 0;
+}
+
+main > section:first-child,
+main > section[aria-labelledby="etkinlik-listesi"] {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--bosluk-m);
+}
+
+main > section[aria-labelledby="etkinlik-listesi"] {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+main > section:first-child > h2,
+main > section[aria-labelledby="etkinlik-listesi"] > h2 {
+  grid-column: 1 / -1;
+}
+
+article,
+form {
+  min-width: 0;
+  padding: var(--bosluk-m);
+  border: 1px solid var(--renk-ana);
+  border-radius: var(--kose);
+  background: var(--renk-zemin);
+}
+
+article p {
+  overflow-wrap: anywhere;
+}
+
+article a,
+footer a,
+button {
+  display: inline-block;
+  min-height: 2.75rem;
+  padding: var(--bosluk-m);
+  border: 0;
+  border-radius: var(--kose);
+  color: var(--renk-zemin);
+  background: var(--renk-ana);
+  font: inherit;
+  font-weight: bold;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+main > section table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--renk-zemin);
+}
+
+th,
+td {
+  padding: var(--bosluk-m);
+  border: 1px solid var(--renk-ana);
+  text-align: left;
+  overflow-wrap: anywhere;
+}
+
+main > article {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--bosluk-m);
+}
+
+main > article > h2,
+main > article > section,
+main > article > p {
+  grid-column: 1 / -1;
+}
+
+figure {
+  margin: 0;
+}
+
+figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--kose);
+}
+
+dl {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: var(--bosluk-m);
+  margin: 0;
+}
+
+dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+form {
+  --renk-hata: hsl(0 68% 43%);
+  max-width: 42rem;
+  margin: 0 auto;
+}
+
+form p {
+  margin: 0 0 var(--bosluk-m);
+}
+
+label {
+  display: inline-block;
+  margin-bottom: var(--bosluk-m);
+  font-weight: bold;
+}
+
+input,
+select,
+textarea {
+  display: block;
+  width: 100%;
+  min-height: 2.75rem;
+  padding: var(--bosluk-m);
+  border: 1px solid var(--renk-ana);
+  border-radius: var(--kose);
+  font: inherit;
+}
+
+textarea {
+  min-height: 8rem;
+}
+
+input:invalid,
+select:invalid,
+textarea:invalid {
+  border-color: var(--renk-hata);
+}
+
+footer {
+  padding: var(--bosluk-m) 0;
+}
+
+@media (max-width: 42rem) {
+  main > section:first-child,
+  main > section[aria-labelledby="etkinlik-listesi"],
+  main > article {
+    grid-template-columns: 1fr;
+  }
+
+  main > section:first-child > h2,
+  main > section[aria-labelledby="etkinlik-listesi"] > h2,
+  main > article > h2,
+  main > article > section,
+  main > article > p {
+    grid-column: auto;
+  }
+
+  dl {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  dt {
+    margin-top: var(--bosluk-m);
+  }
+}
