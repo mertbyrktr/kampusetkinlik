@@ -2,7 +2,7 @@
 
 # Kampüs Etkinlikleri
 
-Kampüs etkinliklerini listelemek, etkinlik ayrıntılarını görüntülemek ve etkinlik bilgilerini ekleme veya güncelleme formlarıyla düzenlemek için hazırlanmış basit bir HTML projesi.
+Kampüs etkinliklerini listelemek, etkinlik ayrıntılarını görüntülemek ve etkinlik bilgilerini ekleme veya güncelleme formlarıyla düzenlemek için hazırlanmış basit bir WEB projesi.
 
 ## Sprint 3'ü yerelde açma
 
