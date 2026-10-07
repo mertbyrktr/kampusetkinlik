@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="format-detection" content="telephone=no">
+  <title>Etkinlik Ekle | Kampüs Etkinlikleri</title>
+  <link rel="stylesheet" href="css/2321032070.css">
+  <script type="module" src="js/event-form.js"></script>
+</head>
+<body>
+  <header>
+    <h1>Etkinlik Ekle</h1>
+    <p>Yeni bir kampüs etkinliği oluşturmak için formu doldur.</p>
+  </header>
+
+  <nav aria-label="Ana menü">
+    <a href="index.html">Ana Sayfa</a>
+    <a href="etkinlikler.html">Etkinlikler</a>
+    <a href="etkinlik-ekle.html">Etkinlik Ekle</a>
+  </nav>
+
+  <main>
+    <form id="etkinlik-formu" novalidate>
+      <p>
+        <label for="etkinlik-adi">Etkinlik Adı</label><br>
+        <input type="text" id="etkinlik-adi" name="ad" autocomplete="off" aria-describedby="ad-hata">
+        <span class="form-hata" id="ad-hata" aria-live="polite"></span>
+      </p>
+
+      <p>
+        <label for="kategori">Kategori</label><br>
+        <select id="kategori" name="kategori" aria-describedby="kategori-hata">
+          <option value="" selected disabled>Kategori seçin</option>
+          <option value="Seminer">Seminer</option>
+          <option value="Atölye">Atölye</option>
+          <option value="Konferans">Konferans</option>
+          <option value="Sosyal etkinlik">Sosyal etkinlik</option>
+        </select>
+        <span class="form-hata" id="kategori-hata" aria-live="polite"></span>
+      </p>
+
+      <p>
+        <label for="tarih">Tarih</label><br>
+        <input type="date" id="tarih" name="tarih" aria-describedby="tarih-hata">
+        <span class="form-hata" id="tarih-hata" aria-live="polite"></span>
+      </p>
+
+      <p>
+        <label for="saat">Saat</label><br>
+        <input type="time" id="saat" name="saat" aria-describedby="saat-hata">
+        <span class="form-hata" id="saat-hata" aria-live="polite"></span>
+      </p>
+
+      <p>
+        <label for="yer">Yer</label><br>
+        <input type="text" id="yer" name="yer" aria-describedby="yer-hata">
+        <span class="form-hata" id="yer-hata" aria-live="polite"></span>
+      </p>
+
+      <p>
+        <label for="aciklama">Açıklama</label><br>
+        <textarea id="aciklama" name="aciklama" rows="4" cols="40" aria-describedby="aciklama-hata"></textarea>
+        <span class="form-hata" id="aciklama-hata" aria-live="polite"></span>
+      </p>
+
+      <p>
+        <label for="kontenjan">Kontenjan (isteğe bağlı)</label><br>
+        <input type="number" id="kontenjan" name="kontenjan" min="1" max="1000" step="1" aria-describedby="kontenjan-hata">
+        <span class="form-hata" id="kontenjan-hata" aria-live="polite"></span>
+      </p>
+
+      <button type="submit">Kaydet</button>
+      <div id="form-mesaj" class="form-mesaj" aria-live="polite"></div>
+    </form>
+  </main>
+
+  <footer>
+    <p><a href="etkinlikler.html">Etkinliklere dön</a></p>
+    <p>Ahmet Mert Bayraktar · 2321032070 · 2026</p>
+  </footer>
+</body>
+</html>

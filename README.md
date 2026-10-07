@@ -1,24 +1,21 @@
+[https://kampusetkinlik.vercel.app](https://kampusetkinlik.vercel.app)
+
 # Kampüs Etkinlikleri
 
 Kampüs etkinliklerini listelemek, etkinlik ayrıntılarını görüntülemek ve etkinlik bilgilerini ekleme veya güncelleme formlarıyla düzenlemek için hazırlanmış basit bir HTML projesi.
 
-## Vercel Canlı Bağlantı
+## Sprint 3'ü yerelde açma
 
-- https://kampusetkinlik.vercel.app
-
-## Projeyi açma
-
-Yerel olarak `sprint1/index.html` dosyasını tarayıcıda açın. Proje statik HTML sayfalarından oluşur; derleme adımı veya CSS/JavaScript gerektirmez.
+`sprint3/index.html` sayfasını VS Code Live Server gibi bir yerel sunucuyla açın. JavaScript modülleri `file://` adresinde çalışmadığından sayfayı doğrudan dosyaya çift tıklayarak açmayın.
 
 ## Sayfalar
 
-- `sprint1/index.html` — Ana sayfa ve yaklaşan etkinlikler
-- `sprint1/etkinlikler.html` — Etkinlik listesi ve ayın programı
-- `sprint1/kariyer-gunleri-2026.html` — Kariyer Günleri 2026 ayrıntıları
-- `sprint1/robot-atolyesi.html` — Robot Atölyesi ayrıntıları
-- `sprint1/etkinlik-ekle.html` — Yeni etkinlik formu
-- `sprint1/etkinlik-guncelle.html` — Kariyer Günleri bilgilerini güncelleme formu
+- `sprint3/index.html` — Yaklaşan iki etkinlik
+- `sprint3/etkinlikler.html` — Arama ve kategori filtresi içeren etkinlik listesi
+- `sprint3/etkinlik-detay.html?id=event-1` — Kimliğe göre etkinlik ayrıntısı
+- `sprint3/etkinlik-ekle.html` — Yeni etkinlik formu ve doğrulama
+- `sprint3/etkinlik-guncelle.html?id=event-1` — Kimliğe göre güncelleme formu
 
 ## Afişler
 
-Kariyer Günleri sayfası `sprint1/afis.jpg` dosyasını kullanır. Robot Atölyesi sayfasi `sprint1/robot.jpg` dosyasını kullanır.
+Kariyer Günleri `sprint3/afis.jpg`, Robot Atölyesi `sprint3/robot.jpg` dosyasını kullanır.

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="format-detection" content="telephone=no">
+  <title>Etkinlikler | Kampüs Etkinlikleri</title>
+  <link rel="stylesheet" href="css/2321032070.css">
+  <script type="module" src="js/event-list.js"></script>
+</head>
+<body>
+  <header>
+    <h1>Kampüs Etkinlikleri</h1>
+    <p>Kampüste gerçekleşecek etkinlikleri incele.</p>
+  </header>
+
+  <nav aria-label="Ana menü">
+    <a href="index.html">Ana Sayfa</a>
+    <a href="etkinlikler.html">Etkinlikler</a>
+    <a href="etkinlik-ekle.html">Etkinlik Ekle</a>
+  </nav>
+
+  <main>
+    <form id="filtre-formu" class="filtre" novalidate>
+      <div class="filtre-alan">
+        <label for="arama">Etkinlik ara</label>
+        <input type="search" id="arama" name="arama" placeholder="Atölye, kariyer...">
+      </div>
+      <div class="filtre-alan">
+        <label for="kategori-filtre">Kategori</label>
+        <select id="kategori-filtre" name="kategori">
+          <option value="">Tümü</option>
+        </select>
+      </div>
+    </form>
+    <p id="sonuc" class="sonuc" aria-live="polite"></p>
+
+    <section id="etkinlik-listesi" class="etkinlik-listesi" aria-labelledby="etkinlik-listesi-baslik">
+      <h2 id="etkinlik-listesi-baslik">Etkinlikler</h2>
+    </section>
+
+  </main>
+
+  <footer>
+    <p><a href="etkinlik-ekle.html">Yeni etkinlik ekle</a></p>
+    <p>Ahmet Mert Bayraktar · 2321032070 · 2026</p>
+  </footer>
+</body>
+</html>
