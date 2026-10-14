@@ -314,6 +314,7 @@ footer {
 
 @media (max-width: 42rem) {
   .kartlar,
+  .etkinlik-listesi[data-limit] .kartlar,
   .filtre,
   main > article {
     grid-template-columns: 1fr;
