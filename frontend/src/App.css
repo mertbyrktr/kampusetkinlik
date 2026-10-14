@@ -47,6 +47,13 @@ nav {
   background: var(--renk-ana);
 }
 
+nav a[aria-current="page"] {
+  color: var(--renk-ana);
+  background: var(--renk-zemin);
+  border-radius: var(--kose);
+  padding: 0 0.5rem;
+}
+
 nav a {
   color: var(--renk-zemin);
   font-weight: bold;
@@ -314,6 +321,7 @@ footer {
 
 @media (max-width: 42rem) {
   .kartlar,
+  .etkinlik-listesi[data-limit] .kartlar,
   .filtre,
   main > article {
     grid-template-columns: 1fr;
