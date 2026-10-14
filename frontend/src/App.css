@@ -1,0 +1,342 @@
+/* Ahmet Mert Bayraktar — 2321032070 */
+:root {
+  --no: 2321032070;
+  --ton: mod(var(--no), 360);
+  --renk-ana: hsl(var(--ton) 65% 38%);
+  --renk-zemin: hsl(var(--ton) 30% 97%);
+  --font: Arial, sans-serif;
+  --bosluk-m: 1rem;
+  --kose: 8px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--renk-zemin);
+  font-family: var(--font);
+  line-height: 1.6;
+}
+
+header,
+nav,
+main,
+footer {
+  width: 90%;
+  max-width: 70rem;
+  margin: 0 auto;
+}
+
+header {
+  padding: var(--bosluk-m) 0;
+}
+
+header h1 {
+  margin-bottom: 0;
+  color: var(--renk-ana);
+}
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--bosluk-m);
+  padding: var(--bosluk-m);
+  border-radius: var(--kose);
+  background: var(--renk-ana);
+}
+
+nav a {
+  color: var(--renk-zemin);
+  font-weight: bold;
+  text-decoration: none;
+}
+
+main {
+  padding: var(--bosluk-m) 0;
+}
+
+.etkinlik-listesi {
+  min-width: 0;
+}
+
+.kartlar {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--bosluk-m);
+  min-width: 0;
+}
+
+.etkinlik-listesi[data-limit] .kartlar {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.kartlar > .kart {
+  min-width: 0;
+  width: 100%;
+}
+
+.tum-etkinlikler {
+  margin: var(--bosluk-m) 0 0;
+}
+
+.tum-etkinlikler a {
+  display: inline-block;
+  min-height: 2.75rem;
+  padding: var(--bosluk-m);
+  border-radius: var(--kose);
+  color: var(--renk-zemin);
+  background: var(--renk-ana);
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.kart h2 {
+  overflow-wrap: anywhere;
+}
+
+article,
+form {
+  min-width: 0;
+  padding: var(--bosluk-m);
+  border: 1px solid var(--renk-ana);
+  border-radius: var(--kose);
+  background: var(--renk-zemin);
+}
+
+article p {
+  overflow-wrap: anywhere;
+}
+
+article a,
+footer a,
+button {
+  display: inline-block;
+  min-height: 2.75rem;
+  padding: var(--bosluk-m);
+  border: 0;
+  border-radius: var(--kose);
+  color: var(--renk-zemin);
+  background: var(--renk-ana);
+  font: inherit;
+  font-weight: bold;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+main > article {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--bosluk-m);
+}
+
+main > article > h2,
+main > article > section,
+main > article > p {
+  grid-column: 1 / -1;
+}
+
+.detay-aciklama,
+.detay-eylemler {
+  grid-column: 1 / -1;
+}
+
+.hata-kutusu,
+main > article.hata-kutusu {
+  border-color: var(--renk-hata, hsl(0 68% 43%));
+  color: var(--renk-hata, hsl(0 68% 43%));
+}
+
+main > article.hata-kutusu {
+  display: block;
+}
+
+figure {
+  margin: 0;
+}
+
+figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--kose);
+}
+
+.afis-yok {
+  display: grid;
+  min-height: 16rem;
+  place-items: center;
+  border-radius: var(--kose);
+  color: var(--renk-zemin);
+  background: var(--renk-ana);
+  font-size: 1.25rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  align-content: start;
+  gap: 0.5rem var(--bosluk-m);
+  margin: 0;
+}
+
+dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+form {
+  --renk-hata: hsl(0 68% 43%);
+  max-width: 42rem;
+  margin: 0 auto;
+}
+
+.filtre {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: end;
+  gap: var(--bosluk-m);
+  max-width: none;
+}
+
+.filtre-alan label {
+  display: block;
+  margin-bottom: 0.35rem;
+}
+
+.sonuc {
+  min-height: 1.6em;
+  margin: 0 0 var(--bosluk-m);
+  font-weight: bold;
+}
+
+.sonuc-yok {
+  color: hsl(0 68% 43%);
+}
+
+form p {
+  margin: 0 0 var(--bosluk-m);
+}
+
+label {
+  display: inline-block;
+  margin-bottom: var(--bosluk-m);
+  font-weight: bold;
+}
+
+input,
+select,
+textarea {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  min-height: 2.75rem;
+  padding: var(--bosluk-m);
+  border: 1px solid var(--renk-ana);
+  border-radius: var(--kose);
+  font: inherit;
+}
+
+input[type="datetime-local"] {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  padding: 0;
+}
+
+textarea {
+  min-height: 8rem;
+}
+
+input:invalid,
+select:invalid,
+textarea:invalid {
+  border-color: var(--renk-hata);
+}
+
+input[aria-invalid="true"],
+select[aria-invalid="true"],
+textarea[aria-invalid="true"] {
+  border-color: var(--renk-hata);
+}
+
+.form-hata {
+  display: block;
+  min-height: 1.25em;
+  color: var(--renk-hata);
+  font-size: 0.9rem;
+}
+
+.form-mesaj {
+  margin-top: var(--bosluk-m);
+}
+
+.form-mesaj:empty {
+  display: none;
+}
+
+.form-mesaj--hata,
+.hata-kutusu {
+  padding: var(--bosluk-m);
+  border: 1px solid var(--renk-hata, hsl(0 68% 43%));
+  border-radius: var(--kose);
+  color: var(--renk-hata, hsl(0 68% 43%));
+  background: hsl(0 68% 97%);
+}
+
+.form-mesaj--basari {
+  padding: var(--bosluk-m);
+  border: 1px solid hsl(135 55% 32%);
+  border-radius: var(--kose);
+  color: hsl(135 55% 25%);
+  background: hsl(135 45% 94%);
+}
+
+.form-mesaj p {
+  margin: 0 0 var(--bosluk-m);
+  font-weight: bold;
+}
+
+.form-mesaj pre {
+  margin: 0;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+  font: 0.9rem/1.5 monospace;
+}
+
+footer {
+  padding: var(--bosluk-m) 0;
+}
+
+@media (max-width: 42rem) {
+  .kartlar,
+  .filtre,
+  main > article {
+    grid-template-columns: 1fr;
+  }
+
+  main > article > h2,
+  main > article > section,
+  main > article > p {
+    grid-column: auto;
+  }
+
+  dl {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  dt {
+    margin-top: var(--bosluk-m);
+  }
+}
+
+@media (min-width: 43rem) and (max-width: 56rem) {
+  .etkinlik-listesi[data-limit] .kartlar {
+    grid-template-columns: 1fr;
+  }
+}
