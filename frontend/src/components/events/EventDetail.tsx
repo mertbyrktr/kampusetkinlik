@@ -61,7 +61,6 @@ function EventDetail({
         >
           ← Listeye dön
         </a>
-        {' '}
         <a
           href="#update"
           onClick={(e) => {
