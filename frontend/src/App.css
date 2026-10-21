@@ -53,6 +53,13 @@ nav a {
   text-decoration: none;
 }
 
+nav a.active {
+  background: white;
+  color: var(--renk-ana);
+  border-radius: var(--kose);
+  padding: 0 0.5rem;
+}
+
 main {
   padding: var(--bosluk-m) 0;
 }
