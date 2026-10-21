@@ -253,12 +253,23 @@ textarea {
   font: inherit;
 }
 
+input[type="date"],
+input[type="time"],
 input[type="datetime-local"] {
+  appearance: none;
   box-sizing: border-box;
   width: 100%;
   min-width: 0;
   max-width: 100%;
+}
+
+input[type="datetime-local"] {
   padding: 0;
+}
+
+input::-webkit-date-and-time-value {
+  min-width: 0;
+  text-align: left;
 }
 
 textarea {
