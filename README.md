@@ -1,27 +1,46 @@
-[https://kampusetkinlik.vercel.app](https://kampusetkinlik.vercel.app)
+# Kampüs Etkinlikleri · Sprint 6
 
-# Kampüs Etkinlikleri
+Ahmet Mert Bayraktar · 2321032070
 
-Kampüs etkinliklerini listelemek, etkinlik ayrıntılarını görüntülemek ve etkinlik bilgilerini ekleme veya güncelleme formlarıyla düzenlemek için hazırlanmış basit bir WEB projesi.
+[Mevcut canlı Vercel adresi](https://kampusetkinlik.vercel.app)
 
-## Sprint 4
+React, TypeScript ve Vite uygulaması `frontend/` klasöründedir. Sprint 6 kapsamında React Router ile 10 route, ortak EventsContext, etkinlik yönetimi ve form doğrulama tamamlanmıştır.
 
-Güncel React + TypeScript uygulaması `frontend/` klasöründedir. Kurulum, dosya açıklamaları ve Vercel teslim ayarları için [Sprint 4 README](frontend/README.md) dosyasına bakın.
+## Kurulum ve çalıştırma
 
-`frontend/` içinde `npm ci` ve `npm run dev` ile çalıştırılır. Üretim kontrolü için `npm run build` ve `npm run preview`; kod kontrolü için `npm run lint` kullanılır. Ekleme ve güncelleme formları Sprint 4 kapsamında yalnızca görünüm sunar.
+```sh
+cd frontend
+npm install
+npm run dev
+```
 
-## Sprint 3'ü yerelde açma
+Üretim derlemesi: `npm run build`. Derlemeyi yerelde açmak için `npm run preview`, kod kontrolü için `npm run lint`.
 
-`sprint3/index.html` sayfasını VS Code Live Server gibi bir yerel sunucuyla açın. JavaScript modülleri `file://` adresinde çalışmadığından sayfayı doğrudan dosyaya çift tıklayarak açmayın.
+## Route listesi
 
-## Sayfalar
+| Adres | Sayfa |
+| --- | --- |
+| `/` | HomePage — Yaklaşan iki etkinlik |
+| `/events` | EventsPage — Arama ve kategori filtresi |
+| `/events/:id` | EventDetailPage — Etkinlik ayrıntısı |
+| `/admin` | AdminPage — Liste, düzenleme ve onaylı silme |
+| `/admin/new` | AddEventPage — Yeni etkinlik |
+| `/admin/:id/edit` | EditEventPage — Etkinlik güncelleme |
+| `/login` | LoginPage — Giriş formu |
+| `/register` | RegisterPage — Kayıt formu |
+| `/forgot-password` | ForgotPasswordPage — Şifre yenileme formu |
+| `*` | NotFoundPage — Bilinmeyen adres veya etkinlik |
 
-- `sprint3/index.html` — Yaklaşan iki etkinlik
-- `sprint3/etkinlikler.html` — Arama ve kategori filtresi içeren etkinlik listesi
-- `sprint3/etkinlik-detay.html?id=event-1` — Kimliğe göre etkinlik ayrıntısı
-- `sprint3/etkinlik-ekle.html` — Yeni etkinlik formu ve doğrulama
-- `sprint3/etkinlik-guncelle.html?id=event-1` — Kimliğe göre güncelleme formu
+## Kapsam
 
-## Afişler
+Etkinlikler EventsContext içinde tutulur. Ekleme, güncelleme ve silme sonuçları ana sayfa, liste, detay ve yönetimde ortaktır. Sayfa yenilenince başlangıç verisi geri gelir. Yönetim herkese açıktır. Giriş, kayıt ve şifre yenileme formları yalnızca doğrulama ve demo mesajı gösterir; sunucuya veri göndermez.
 
-Kariyer Günleri `sprint3/afis.jpg`, Robot Atölyesi `sprint3/robot.jpg` dosyasını kullanır.
+Etkinlik formu: ad en az 3 karakter, kategori seçili, tarih/saat/yer dolu, kontenjan 1–1000 arası tam sayı, açıklama en az 10 karakter. Giriş: e-postada @, şifre en az 6 karakter. Kayıt ayrıca en az 3 karakterlik ad soyad ve eşleşen şifreler ister. Şifre yenilemede e-postada @ aranır.
+
+## Vercel
+
+Root Directory: `frontend`, Framework Preset: `Vite`, Build Command: `npm run build`, Output Directory: `dist`. `frontend/vercel.json` alt adreslerin doğrudan açılması ve yenilenmesi için SPA yönlendirmesini içerir.
+
+Yukarıdaki bağlantı mevcut proje adresidir; bu çalışma sırasında yeni sürüm yayımlanmadı. PDF'teki `isimsoyisim-frontend.vercel.app` biçimindeki teslim adresi yayında oluşturulduğunda bu bağlantı güncellenmelidir. Git teslim işlemleri kullanıcıya bırakılmıştır.
+
+Önceki sprintler `sprint1/`, `sprint2/` ve `sprint3/` klasörlerinde korunmuştur. Güncel dosya yapısı için [frontend README](frontend/README.md).
