@@ -2,7 +2,7 @@
 
 Ahmet Mert Bayraktar · 2321032070
 
-[Mevcut canlı Vercel adresi](https://kampusetkinlik.vercel.app)
+[Canlı Vercel adresi](https://ahmetmertbayraktar-frontend.vercel.app)
 
 ## Çalıştırma
 
@@ -58,4 +58,4 @@ Yönetim için giriş kontrolü yoktur. Üç hesap formu yalnızca frontend demo
 
 Vercel: Root Directory `frontend`, Framework Preset `Vite`, Build Command `npm run build`, Output Directory `dist`.
 
-Mevcut canlı bağlantı önceki yayını işaret eder. Bu çalışma sırasında yayın yapılmadı; PDF'in istediği `isimsoyisim-frontend.vercel.app` adresi yayına alındığında README bağlantıları güncellenmelidir. Git teslim adımları kullanıcıya bırakılmıştır.
+Projenin son sürümü Vercel üzerinde yayındadır. Canlı adres: [ahmetmertbayraktar-frontend.vercel.app](https://ahmetmertbayraktar-frontend.vercel.app).

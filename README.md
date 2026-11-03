@@ -2,7 +2,7 @@
 
 Ahmet Mert Bayraktar · 2321032070
 
-[Mevcut canlı Vercel adresi](https://kampusetkinlik.vercel.app)
+[Canlı Vercel adresi](https://ahmetmertbayraktar-frontend.vercel.app)
 
 React, TypeScript ve Vite uygulaması `frontend/` klasöründedir. Sprint 6 kapsamında React Router ile 10 route, ortak EventsContext, etkinlik yönetimi ve form doğrulama tamamlanmıştır.
 
@@ -41,6 +41,6 @@ Etkinlik formu: ad en az 3 karakter, kategori seçili, tarih/saat/yer dolu, kont
 
 Root Directory: `frontend`, Framework Preset: `Vite`, Build Command: `npm run build`, Output Directory: `dist`. `frontend/vercel.json` alt adreslerin doğrudan açılması ve yenilenmesi için SPA yönlendirmesini içerir.
 
-Yukarıdaki bağlantı mevcut proje adresidir; bu çalışma sırasında yeni sürüm yayımlanmadı. PDF'teki `isimsoyisim-frontend.vercel.app` biçimindeki teslim adresi yayında oluşturulduğunda bu bağlantı güncellenmelidir. Git teslim işlemleri kullanıcıya bırakılmıştır.
+Projenin son sürümü Vercel üzerinde yayındadır. Canlı adres: [ahmetmertbayraktar-frontend.vercel.app](https://ahmetmertbayraktar-frontend.vercel.app).
 
 Önceki sprintler `sprint1/`, `sprint2/` ve `sprint3/` klasörlerinde korunmuştur. Güncel dosya yapısı için [frontend README](frontend/README.md).
