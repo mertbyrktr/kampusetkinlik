@@ -1,48 +1,61 @@
-[Canlı site](https://kampusetkinlik.vercel.app)
-
-# Kampüs Etkinlikleri · Sprint 4
+# Kampüs Etkinlikleri · Sprint 6
 
 Ahmet Mert Bayraktar · 2321032070
 
-React, TypeScript ve Vite ile beş ekran: ana sayfa, etkinlik listesi, detay, ekleme ve güncelleme. Sayfa geçişleri React state ile yapılır; adres değişmez. Arama başlık ve açıklamada Türkçe büyük/küçük harf uyumuyla çalışır, kategori filtresiyle birlikte uygulanır. Formlar bu sprintte yalnızca görünüm sunar; veri kaydetmez ve gönderilince sayfayı yenilemez.
+[Mevcut canlı Vercel adresi](https://kampusetkinlik.vercel.app)
 
 ## Çalıştırma
 
+Bu klasörde:
+
 ```sh
-cd frontend
-npm ci
+npm install
 npm run dev
 ```
 
-Üretim kontrolü: `npm run build`, ardından `npm run preview`. Kod kontrolü: `npm run lint`.
+`npm run build` TypeScript kontrolünü ve üretim derlemesini yapar. `npm run preview` derlemeyi açar. `npm run lint` kod kontrolünü yapar.
 
-## Dosyaların görevleri
+## Dosya yapısı
 
-- `package.json`: Paketleri ve dev, build, lint, preview komutlarını tanımlar.
-- `package-lock.json`: Bağımlılıkların tam sürümlerini sabitler.
-- `node_modules/`: İndirilen bağımlılıkları içerir; Git'e dahil edilmez.
-- `tsconfig.json`, `tsconfig.app.json`, `tsconfig.node.json`: TypeScript ayarlarıdır.
-- `vite.config.ts`: Vite ve React eklentisini yapılandırır.
-- `index.html`: React'in bağlandığı root elemanını ve uygulama girişini içerir.
-- `src/main.tsx`: React'i başlatır ve App bileşenini root'a çizer.
-- `src/App.tsx`: Beş ekranı, menüyü, kartları, filtre state'ini ve sekme başlığını yönetir.
-- `src/App.css`: Sprint 3 tasarımını içerir; aktif menü ve telefon kart düzeni için küçük uyarlamalar yapılmıştır.
-- `src/index.css`: Sprint gereği boştur.
-- `src/types/campus-event.ts`: Dört kategori ve CampusEvent veri tipini tanımlar.
-- `src/data/events.ts`: Altı etkinliği tipli bir dizi olarak saklar.
-- `src/utils/filter-events.ts`: DOM'a dokunmadan arama, kategori filtreleme ve kimliğe göre bulma işlemlerini yapar.
-- `public/`: Afiş ve favicon gibi doğrudan sunulan statik dosyaları içerir.
-- `.gitignore`: node_modules, dist ve yerel dosyaları Git dışında tutar.
-- `.oxlintrc.json`: Kod kontrol kurallarını yapılandırır.
+- `src/main.tsx`: BrowserRouter ve EventsProvider ile uygulamayı başlatır.
+- `src/App.tsx`: Header, Navigation, 10 route ve Footer içerir; state tutmaz.
+- `src/context/EventsContext.tsx`: Ortak etkinlik listesi, ekleme, güncelleme, silme ve useEvents hook'u.
+- `src/pages/`: HomePage, EventsPage, EventDetailPage, AdminPage, AddEventPage, EditEventPage, LoginPage, RegisterPage, ForgotPasswordPage, NotFoundPage.
+- `src/components/layout/`: Header, Navigation (NavLink), Footer.
+- `src/components/events/`: EventCard, EventList, EventFilter, EventDetail.
+- `src/components/forms/EventForm.tsx`: Ekleme ve güncellemede kullanılan kontrollü form.
+- `src/types/campus-event.ts`: CampusEvent, Category, EventFormData ve EventFormErrors tipleri.
+- `src/utils/`: filter-events, format-date ve validate-event.
+- `src/data/events.ts`: Başlangıç etkinlikleri.
+- `src/App.css`: Mevcut tasarım ve yönetim tablosunun mobil kart düzeni.
+- `public/`: Afiş ve favicon.
+- `vercel.json`: SPA adreslerini index.html'e yönlendirir.
 
-## Veri uyarlaması
+## Route listesi
 
-Sprint 3 arşivi değiştirilmemiştir. Sprint 4'te PDF'in altı kayıt şartı için ilk altı kayıt temel alınmıştır; son iki kayıt, izin verilen Söyleşi ve Yarışma kategorilerine uygun başlık ve açıklamalarla uyarlanmıştır. Tarihler sıralanabilir YYYY-MM-DD biçimindedir. Ana sayfa PDF'teki sort + slice örneği gibi tarihe göre ilk iki kaydı gösterir. İlk etkinlik /afis.svg kullanır; afişi olmayan etkinliklerde boş afiş kutusu çizilmez.
+| Adres | Bileşen |
+| --- | --- |
+| `/` | HomePage |
+| `/events` | EventsPage |
+| `/events/:id` | EventDetailPage |
+| `/admin` | AdminPage |
+| `/admin/new` | AddEventPage |
+| `/admin/:id/edit` | EditEventPage |
+| `/login` | LoginPage |
+| `/register` | RegisterPage |
+| `/forgot-password` | ForgotPasswordPage |
+| `*` | NotFoundPage |
 
-## Teslim
+## Davranış
 
-Canlı site bağlantısı mevcut projenin adresidir; bu yerel değişiklikler yayımlanana kadar önceki sprint görünebilir.
+Veriler Context state'inde tutulur; sayfalar arası geçişte korunur, yenilemede başlangıç listesine döner. Silme öncesinde onay sorulur. Ana sayfa tarihe göre ilk iki etkinliği gösterir. Arama başlık ve açıklamada Türkçe büyük/küçük harf uyumuyla çalışır ve kategori filtresiyle birlikte uygulanır.
 
-Vercel proje ayarları: Root Directory `frontend`, Framework Preset `Vite`, Build Command `npm run build`, Output Directory `dist`.
+Etkinlik doğrulaması: ad en az 3 karakter, kategori seçili, tarih/saat/yer dolu, kontenjan 1–1000 arası tam sayı, açıklama en az 10 karakter. Girişte e-postada @ ve en az 6 karakterlik şifre gerekir. Kayıtta ayrıca ad soyad en az 3 karakter olmalı ve şifreler eşleşmelidir. Şifre yenilemede e-postada @ aranır. Hatalar alanların altında gösterilir.
 
-Yerel kontrol tamamlandıktan sonra yalnızca teslim edilecek dosyaları commit'e dahil edin, `sprint-04` etiketi oluşturun ve ilgili dal ile etiketi gönderin. node_modules ve dist gönderilmemelidir. Yayından sonra canlı adreste ana sayfa, altı kayıt, arama/filtre, detay ve iki form tekrar kontrol edilmelidir.
+Yönetim için giriş kontrolü yoktur. Üç hesap formu yalnızca frontend demosudur; gerçek kullanıcı hesabı oluşturulmaz, giriş yapılmaz, e-posta gönderilmez.
+
+## Yayın ayarları
+
+Vercel: Root Directory `frontend`, Framework Preset `Vite`, Build Command `npm run build`, Output Directory `dist`.
+
+Mevcut canlı bağlantı önceki yayını işaret eder. Bu çalışma sırasında yayın yapılmadı; PDF'in istediği `isimsoyisim-frontend.vercel.app` adresi yayına alındığında README bağlantıları güncellenmelidir. Git teslim adımları kullanıcıya bırakılmıştır.

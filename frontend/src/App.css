@@ -7,6 +7,7 @@
   --font: Arial, sans-serif;
   --bosluk-m: 1rem;
   --kose: 8px;
+  --renk-hata: hsl(0 68% 43%);
 }
 
 * {
@@ -118,6 +119,7 @@ article p {
 
 article a,
 footer a,
+.buton,
 button {
   display: inline-block;
   min-height: 2.75rem;
@@ -334,6 +336,63 @@ textarea[aria-invalid="true"] {
 
 footer {
   padding: var(--bosluk-m) 0;
+}
+
+.tablo {
+  width: 100%;
+  margin-top: var(--bosluk-m);
+  border-collapse: collapse;
+}
+
+.tablo th,
+.tablo td {
+  padding: 0.5rem;
+  text-align: left;
+  overflow-wrap: anywhere;
+}
+
+.tablo th {
+  background: var(--renk-ana);
+  color: white;
+}
+
+.islemler {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.buton-sil {
+  background: var(--renk-hata);
+}
+
+@media (max-width: 699px) {
+  .tablo thead {
+    display: none;
+  }
+
+  .tablo,
+  .tablo tbody,
+  .tablo tr,
+  .tablo td {
+    display: block;
+  }
+
+  .tablo tr {
+    margin-bottom: var(--bosluk-m);
+    padding: 0.5rem;
+    border: 1px solid var(--renk-ana);
+    border-radius: var(--kose);
+  }
+
+  .tablo td.islemler {
+    display: flex;
+  }
+
+  .tablo td[data-baslik]::before {
+    content: attr(data-baslik) ': ';
+    font-weight: 700;
+  }
 }
 
 @media (max-width: 42rem) {

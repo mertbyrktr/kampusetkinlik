@@ -11,3 +11,10 @@ export interface CampusEvent {
   description: string
   image?: string
 }
+
+export type EventFormData = Omit<CampusEvent, 'id' | 'capacity' | 'category'> & {
+  capacity: string
+  category: Category | ''
+}
+
+export type EventFormErrors = Partial<Record<keyof EventFormData, string>>

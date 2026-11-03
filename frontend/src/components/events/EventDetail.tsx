@@ -1,18 +1,13 @@
 
 import type { CampusEvent } from '../../types/campus-event'
 import { formatDate } from '../../utils/format-date'
+import { Link } from 'react-router-dom'
 
 interface EventDetailProps {
   event: CampusEvent
-  onBack: () => void
-  onEdit: (id: string) => void
 }
 
-function EventDetail({
-  event,
-  onBack,
-  onEdit
-}: EventDetailProps) {
+function EventDetail({ event }: EventDetailProps) {
   return (
     <article className="detay">
       {event.image && (
@@ -52,24 +47,8 @@ function EventDetail({
       </section>
 
       <p className="detay-eylemler">
-        <a
-          href="#events"
-          onClick={(e) => {
-            e.preventDefault()
-            onBack()
-          }}
-        >
-          ← Listeye dön
-        </a>
-        <a
-          href="#update"
-          onClick={(e) => {
-            e.preventDefault()
-            onEdit(event.id)
-          }}
-        >
-          Bu etkinliği güncelle
-        </a>
+        <Link to="/events">← Listeye dön</Link>
+        <Link to={`/admin/${event.id}/edit`}>Bu etkinliği güncelle</Link>
       </p>
     </article>
   )
