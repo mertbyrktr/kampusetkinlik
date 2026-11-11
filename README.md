@@ -1,10 +1,16 @@
-# Kampüs Etkinlikleri · Sprint 6
+# Kampüs Etkinlikleri · Sprint 7
 
 Ahmet Mert Bayraktar · 2321032070
 
 [Canlı Vercel adresi](https://ahmetmertbayraktar-frontend.vercel.app)
 
 React, TypeScript ve Vite uygulaması `frontend/` klasöründedir. Sprint 6 kapsamında React Router ile 10 route, ortak EventsContext, etkinlik yönetimi ve form doğrulama tamamlanmıştır.
+
+## Sprint 7 - Express REST API
+
+`backend/` klasöründe bağımsız Express API eklendi. Health, etkinlik listesi, detay ve yeni etkinlik oluşturma uçları; altı özgün başlangıç etkinliği; Postman koleksiyonu ve otomatik testler hazırdır. Frontend Sprint 6 davranışını korur; API bağlantısı ileriki sprinttedir.
+
+Backend kurulumu, PORT ayarı ve REST sözleşmesi için [backend README](backend/README.md); 12 maddelik doğrulama için [Sprint 7 checklist](backend/CHECKLIST.md).
 
 ## Kurulum ve çalıştırma
 
