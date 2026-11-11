@@ -36,7 +36,6 @@ backend/
   package.json
   package-lock.json
   README.md
-  CHECKLIST.md
 ```
 
 ## REST sözleşmesi
@@ -110,5 +109,3 @@ postman collection run requests/kampus-api.json
 | GET `/events/yok` | 404, error.message |
 | POST `/events`, tam gövde | 201, yeni id |
 | POST `/events`, yalnızca title | 400, error.message |
-
-Doğrulama ve teslim listesi: [CHECKLIST.md](CHECKLIST.md).

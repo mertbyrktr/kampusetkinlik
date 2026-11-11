@@ -10,7 +10,7 @@ React, TypeScript ve Vite uygulaması `frontend/` klasöründedir. Sprint 6 kaps
 
 `backend/` klasöründe bağımsız Express API eklendi. Health, etkinlik listesi, detay ve yeni etkinlik oluşturma uçları; altı özgün başlangıç etkinliği; Postman koleksiyonu ve otomatik testler hazırdır. Frontend Sprint 6 davranışını korur; API bağlantısı ileriki sprinttedir.
 
-Backend kurulumu, PORT ayarı ve REST sözleşmesi için [backend README](backend/README.md); 12 maddelik doğrulama için [Sprint 7 checklist](backend/CHECKLIST.md).
+Backend kurulumu, PORT ayarı, REST sözleşmesi ve test komutları için [backend README](backend/README.md).
 
 ## Kurulum ve çalıştırma
 
