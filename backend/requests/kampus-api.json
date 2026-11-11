@@ -1,0 +1,231 @@
+{
+  "info": {
+    "name": "Kampüs API",
+    "description": "Sprint 7 - Ahmet Mert Bayraktar, 2321032070. Sunucuyu yeniden başlatıp altı isteği sırayla çalıştırın; liste başlangıçta 6 kayıt bekler.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1 Health",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/health",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "health"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+              "pm.test('JSON yanıtı', () => pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json'));",
+              "const data = pm.response.json();",
+              "pm.test('Beklenen içerik', () => { pm.expect(data.status).to.eql('ok'); pm.expect(data.student).to.eql('2321032070'); pm.expect(new Date(data.time).toISOString()).to.eql(data.time); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "2 Etkinlik listesi",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/events",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "events"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+              "pm.test('JSON yanıtı', () => pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json'));",
+              "const data = pm.response.json();",
+              "pm.test('Beklenen içerik', () => { pm.expect(data).to.have.lengthOf(6); pm.expect(data.map(e => e.id)).to.eql(['event-1','event-2','event-3','event-4','event-5','event-6']); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "3 Tek etkinlik",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/events/event-2",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "events",
+            "event-2"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+              "pm.test('JSON yanıtı', () => pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json'));",
+              "const data = pm.response.json();",
+              "pm.test('Beklenen içerik', () => { pm.expect(data.id).to.eql('event-2'); pm.expect(data.title).to.eql('Sensörlerle Akıllı Saksı Atölyesi'); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "4 Olmayan etkinlik (404)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/events/yok",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "events",
+            "yok"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 404', () => pm.response.to.have.status(404));",
+              "pm.test('JSON yanıtı', () => pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json'));",
+              "const data = pm.response.json();",
+              "pm.test('Beklenen içerik', () => { pm.expect(data).to.eql({error: {message: 'Event not found'}}); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "5 Etkinlik oluştur (201)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/events",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "events"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Git Atölyesi\",\n  \"category\": \"Atölye\",\n  \"capacity\": 30,\n  \"date\": \"2026-12-01\",\n  \"time\": \"14:00\",\n  \"location\": \"Bilgisayar Laboratuvarı 1\",\n  \"description\": \"Git ve GitHub ile ilk adımlar.\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 201', () => pm.response.to.have.status(201));",
+              "pm.test('JSON yanıtı', () => pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json'));",
+              "const data = pm.response.json();",
+              "pm.test('Beklenen içerik', () => { pm.expect(data.id).to.match(/^event-/); pm.expect(data.id).not.to.eql('event-2'); const sent = JSON.parse(pm.request.body.raw); Object.keys(sent).forEach(key => pm.expect(data[key]).to.eql(sent[key])); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "6 Eksik veri (400)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/events",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "events"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Eksik etkinlik\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('HTTP 400', () => pm.response.to.have.status(400));",
+              "pm.test('JSON yanıtı', () => pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json'));",
+              "const data = pm.response.json();",
+              "pm.test('Beklenen içerik', () => { pm.expect(data).to.eql({error: {message: 'title, category and date are required'}}); });"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
