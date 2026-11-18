@@ -1,30 +1,42 @@
-import { randomUUID } from 'node:crypto';
-import { events } from '../data/events.js';
+import mongoose from 'mongoose';
+import { Event } from '../models/event-model.js';
 
-export function getEvents(req, res) {
-  const { category } = req.query;
-  res.json(category ? events.filter((event) => event.category === category) : events);
-}
+export async function getEvents(req, res, next) {
+  try {
+    const { category } = req.query;
+    if (category && typeof category !== 'string') return res.json([]);
 
-export function getEventById(req, res) {
-  const event = events.find((item) => item.id === req.params.id);
-  if (!event) return res.status(404).json({ error: { message: 'Event not found' } });
-  res.json(event);
-}
-
-export function createEvent(req, res) {
-  const { title, category, date, capacity, time, location, description } = req.body ?? {};
-  const required = [title, category, date];
-  if (required.some((value) => typeof value !== 'string' || !value.trim())) {
-    return res.status(400).json({ error: { message: 'title, category and date are required' } });
+    const filter = category ? { category } : {};
+    const events = await Event.find(filter).sort({ date: 1 });
+    res.json(events);
+  } catch (error) {
+    next(error);
   }
-  const numericCapacity = Number(capacity);
-  const newEvent = {
-    id: `event-${randomUUID()}`,
-    title, category, date,
-    capacity: Number.isFinite(numericCapacity) ? numericCapacity : 0,
-    time: time ?? '', location: location ?? '', description: description ?? '',
-  };
-  events.push(newEvent);
-  res.status(201).json(newEvent);
+}
+
+export async function getEventById(req, res, next) {
+  try {
+    const { id } = req.params;
+    const event = mongoose.isValidObjectId(id) ? await Event.findById(id) : null;
+    if (!event) return res.status(404).json({ error: { message: 'Event not found' } });
+    res.json(event);
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function createEvent(req, res, next) {
+  try {
+    const { title, category, date, capacity, time, location, description } = req.body ?? {};
+    const event = await Event.create({
+      title, category, date, capacity: capacity ?? undefined,
+      time: time ?? undefined, location: location ?? undefined, description: description ?? undefined,
+    });
+    res.status(201).json(event);
+  } catch (error) {
+    if (error instanceof mongoose.Error.ValidationError) {
+      return res.status(400).json({ error: { message: error.message } });
+    }
+    next(error);
+  }
 }

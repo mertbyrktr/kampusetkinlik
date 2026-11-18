@@ -16,14 +16,19 @@ app.use((req, res) => {
   res.status(404).json({ error: { message: 'Route not found' } });
 });
 
-// JSON parser errors must use the same error envelope as controller errors.
 app.use((error, req, res, next) => {
   if (res.headersSent) return next(error);
-  const status = error.status >= 400 && error.status < 500 ? error.status : 500;
-  res.status(status).json({ error: {
-    message: error.type === 'entity.parse.failed' ? 'Invalid JSON body'
-      : status === 413 ? 'Request body too large' : 'Internal server error',
-  } });
+  if (error.type === 'entity.parse.failed') {
+    return res.status(400).json({ error: { message: 'Invalid JSON body' } });
+  }
+  if (error.status === 413) {
+    return res.status(413).json({ error: { message: 'Request body too large' } });
+  }
+  if (error.status >= 400 && error.status < 500) {
+    return res.status(error.status).json({ error: { message: 'Invalid request' } });
+  }
+  console.error(error.name);
+  res.status(500).json({ error: { message: 'Server error' } });
 });
 
 export default app;
