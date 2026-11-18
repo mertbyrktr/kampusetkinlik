@@ -1,6 +1,6 @@
 import { after, before, test } from 'node:test';
 import assert from 'node:assert/strict';
-import { randomUUID } from 'node:crypto';
+import { randomBytes } from 'node:crypto';
 import { once } from 'node:events';
 import mongoose from 'mongoose';
 import app from '../src/app.js';
@@ -11,7 +11,8 @@ let server;
 let base;
 before(async () => {
   await mongoose.connect(process.env.MONGODB_TEST_URI || 'mongodb://127.0.0.1:27017', {
-    dbName: `kampus_api_test_${randomUUID()}`,
+    // Atlas shared clusters limit database names to 38 bytes.
+    dbName: `kampus_api_test_${randomBytes(8).toString('hex')}`,
     serverSelectionTimeoutMS: 5000,
   });
   await Event.insertMany(seedEvents);

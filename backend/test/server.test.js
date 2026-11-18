@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { execFile, spawn } from 'node:child_process';
-import { randomUUID } from 'node:crypto';
+import { randomBytes } from 'node:crypto';
 import { mkdtemp, writeFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
@@ -14,7 +14,7 @@ import { Event } from '../src/models/event-model.js';
 test('seed is repeatable and a POST survives restarting the API', async () => {
   const directory = await mkdtemp(join(tmpdir(), 'kampus-env-'));
   const uri = new URL(process.env.MONGODB_TEST_URI || 'mongodb://127.0.0.1:27017');
-  uri.pathname = `/kampus_server_test_${randomUUID()}`;
+  uri.pathname = `/kampus_server_test_${randomBytes(8).toString('hex')}`;
   const env = { ...process.env };
   delete env.PORT;
   delete env.MONGODB_URI;
