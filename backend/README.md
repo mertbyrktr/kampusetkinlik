@@ -1,65 +1,44 @@
-# Kampüs Etkinlikleri API - Sprint 7
+# Kampüs Etkinlikleri API · Sprint 8
 
 Ahmet Mert Bayraktar · **2321032070**
 
-Node.js + Express REST API. Frontend ayrı uygulama olarak korunur; bu sprintte API'ye bağlanmaz. Veriler bellekte tutulur: sunucu yeniden başlatıldığında POST ile eklenen kayıtlar kaybolur ve altı başlangıç etkinliği geri gelir.
+Express API etkinlikleri MongoDB'nin `events` koleksiyonunda saklar. Sunucu yeniden başlatıldığında POST ile eklenen kayıtlar korunur.
 
-## Kurulum ve çalıştırma
+## Kurulum
 
-Node.js 22 veya üzeri gerekir. Repo kökünden:
+Node.js 22 veya üzeri gerekir. Repo kökünden çalıştır:
 
 ```sh
 cd backend
 npm install
-cp .env.example .env
+cp -n .env.example .env
+```
+
+`backend/.env` içindeki `MONGODB_URI` değerini kendi Atlas bağlantı adresinle değiştir ve adresin veritabanı yoluna `/kampus` ekle. Yerel MongoDB kullanıyorsan `.env.example` dosyasındaki örnek adresi kullanabilirsin. `.env` Git tarafından yok sayılır.
+
+İlk kurulumda örnek veriyi yükle, ardından sunucuyu başlat:
+
+```sh
+npm run seed
 npm run dev
 ```
 
-`npm run dev` dosya değişikliklerini izler. İzleme olmadan çalıştırmak için `npm start` kullanılır. Varsayılan adres: `http://localhost:3000`.
+**Seed, hedef veritabanındaki mevcut etkinlikleri silip altı örnek etkinlik yükler.** İkinci çalıştırmada da altı kayıt kalır. Normal sunucu başlangıcı seed çalıştırmaz.
 
-`.env` içindeki `PORT=3000`, `dotenv` ile okunur; değer yoksa 3000 kullanılır. `.env.example` paylaşılır, `.env` ve `node_modules/` Git tarafından yok sayılır. Backend bu sprintte canlıya alınmaz; Vercel ayarları değişmez.
+API varsayılan olarak `http://localhost:3000` adresinde çalışır. `PORT` değeri `.env` üzerinden ayarlanabilir. Dosya izleme olmadan başlatmak için `npm start` kullan.
 
-## Dosya yapısı
+## API
 
-```text
-backend/
-  src/
-    app.js                       # Middleware, health, route bağlantısı ve JSON hataları
-    server.js                    # .env ve port dinleme
-    routes/event-routes.js        # URL -> controller eşlemesi
-    controllers/event-controller.js
-    data/events.js               # event-1 ... event-6, özgün başlangıç verisi
-  requests/kampus-api.json        # Postman Collection v2.1, altı istek
-  test/                          # HTTP ve sunucu yaşam döngüsü testleri
-  .env.example
-  .gitignore
-  package.json
-  package-lock.json
-  README.md
-```
+| Yöntem | Adres | Beklenen yanıt |
+| --- | --- | --- |
+| GET | `/health` | 200, `status`, ISO zaman ve `student: "2321032070"` |
+| GET | `/events` | 200, tarihe göre artan sırada etkinlik dizisi |
+| GET | `/events/:id` | 200, etkinlik. Geçersiz ve bulunamayan `_id` için 404 |
+| POST | `/events` | 201, MongoDB `_id` ve zaman damgalarıyla yeni etkinlik. Doğrulama hatasında 400 |
 
-## REST sözleşmesi
+Listeyi kategoriye göre filtrelemek için `/events?category=At%C3%B6lye` kullan. Eşleşme yoksa yanıt boş dizidir. Her kayıtta `_id`, `createdAt` ve `updatedAt` bulunur.
 
-Tüm yanıtlar JSON'dur. Başarılı liste yanıtı doğrudan dizi, detay ve POST yanıtı doğrudan etkinlik nesnesidir.
-
-| Method | Endpoint | Amaç | Başarılı | Hata | Durum |
-| --- | --- | --- | --- | --- | --- |
-| GET | `/health` | Sunucu durumu, ISO zaman ve öğrenci numarası | 200 | - | Sprint 7 |
-| GET | `/events` | Etkinlik listesi | 200 | - | Sprint 7 |
-| GET | `/events/:id` | Tek etkinlik | 200 | 404 | Sprint 7 |
-| POST | `/events` | Yeni etkinlik | 201 | 400 | Sprint 7 |
-| PATCH | `/events/:id` | Güncelleme | 200 | 400, 404 | Sprint 9, henüz uygulanmadı |
-| DELETE | `/events/:id` | Silme | 204 | 404 | Sprint 9, henüz uygulanmadı |
-
-İsteğe bağlı kategori filtresi: `/events?category=At%C3%B6lye`. Eşleşme yoksa `200` ve boş dizi döner. Bilinmeyen yollar `404` döner.
-
-Health örneği (`time` her istekte güncellenir):
-
-```json
-{"status":"ok","time":"2026-11-11T09:00:00.000Z","student":"2321032070"}
-```
-
-POST gövdesi:
+POST gövdesi örneği:
 
 ```json
 {
@@ -73,39 +52,12 @@ POST gövdesi:
 }
 ```
 
-`title`, `category`, `date` boş olmayan metin olarak zorunludur. Başarılı yanıtta bu alanlarla birlikte sunucunun ürettiği benzersiz `event-<UUID>` kimliği bulunur. İstemcinin gönderdiği `id` kullanılmaz. `capacity` sayıya çevrilir; yoksa/geçersizse 0 olur. `time`, `location`, `description` verilmezse boş metindir. Ayrıntılı tarih/kategori/kapasite doğrulaması sonraki sprintin kapsamıdır.
+`title` (3–100 karakter), `category` ve `date` zorunludur. Kategoriler Seminer, Atölye, Söyleşi ve Yarışma'dır. `capacity` en az 0 olur ve varsayılanı 0'dır. Açıklama en fazla 500 karakter olabilir. Hatalar `{"error":{"message":"…"}}` biçiminde döner.
 
-Bütün hatalarda ortak biçim:
+## Doğrulama
 
-```json
-{"error":{"message":"Event not found"}}
-```
+Yerel MongoDB çalışırken `npm test` komutunu kullan. MongoDB farklı bir yerel porttaysa örneğin `MONGODB_TEST_URI=mongodb://127.0.0.1:27018 npm test` komutunu çalıştır. Testler kendi geçici veritabanlarını oluşturup temizler.
 
-Eksik zorunlu alan: `400`, mesaj `title, category and date are required`. Bilinmeyen yol: `404`, mesaj `Route not found`. Bozuk JSON: `400`, mesaj `Invalid JSON body`.
+Postman'de [Kampüs API koleksiyonunu](requests/kampus-api.json) içe aktar. Test veritabanında seed çalıştırdıktan sonra altı isteği sırayla çalıştır. Liste isteği, ilk etkinliğin `_id` değerini detay isteğine aktarır. Son POST isteğinden sonra `/health` yine 200 dönmelidir.
 
-## Testler
-
-```sh
-npm test
-```
-
-Testler ayrı geçici portlarda çalışır; açık geliştirme sunucusunun verisini değiştirmez. Health, altı kayıt, detay/404, filtre, POST/201, eksik veri/400, benzersiz kimlik, JSON hataları, CORS, .env okuma ve yeniden başlatmada verinin sıfırlanması doğrulanır.
-
-Postman'de `requests/kampus-api.json` dosyasını **Import** ile aç. Koleksiyon adı **Kampüs API**, formatı **Collection v2.1**'dir. Altı kayıt beklendiği için koleksiyonu her çalıştırmadan önce sunucuyu yeniden başlat; istekleri sırayla çalıştır.
-
-Postman CLI kuruluysa (sunucu ayrı terminalde açıkken):
-
-```sh
-postman collection run requests/kampus-api.json
-```
-
-[Resmi Postman CLI kurulumu](https://learning.postman.com/docs/postman-cli/postman-cli-installation/): `npm install -g postman-cli`. Bu çalışmada araç sistem geneline kurmak yerine `/tmp/kampus-postman-cli` altında kullanıldı.
-
-| İstek | Beklenen sonuç |
-| --- | --- |
-| GET `/health` | 200, status=ok, student=2321032070 |
-| GET `/events` | 200, başlangıçta 6 kayıt |
-| GET `/events/event-2` | 200, id=event-2 |
-| GET `/events/yok` | 404, error.message |
-| POST `/events`, tam gövde | 201, yeni id |
-| POST `/events`, yalnızca title | 400, error.message |
+Kalıcılığı elle kontrol etmek için 201 dönen POST yanıtındaki `_id` değerini al, API'yi yeniden başlat ve aynı kimlikle detay isteği yap. Seed sonrası altı kayıtla başladıysan listede artık yedi kayıt görünür.
