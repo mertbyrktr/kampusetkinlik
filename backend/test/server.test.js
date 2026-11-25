@@ -67,7 +67,7 @@ test('seed is repeatable and a POST survives restarting the API', async () => {
     }
     let base = await start();
     assert.equal((await (await fetch(base + '/events')).json()).length, 6);
-    const created = await fetch(base + '/events', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ title: 'Kalıcı Etkinlik', category: 'Seminer', date: '2026-12-01' }) });
+    const created = await fetch(base + '/events', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ title: 'Kalıcı Etkinlik', category: 'Seminer', date: '01-12-2026' }) });
     assert.equal(created.status, 201);
     const event = await created.json();
     assert.equal(await Event.countDocuments(), 7);

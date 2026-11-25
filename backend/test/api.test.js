@@ -29,9 +29,9 @@ after(async () => {
   }
 });
 
-async function request(path, body) {
+async function request(path, body, method = 'POST') {
   const response = await fetch(base + path, body === undefined ? {} : {
-    method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body),
+    method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body),
   });
   assert.match(response.headers.get('content-type'), /application\/json/);
   return { status: response.status, body: await response.json() };
@@ -78,7 +78,7 @@ test('category query filters events', async () => {
 });
 
 test('POST creates a retrievable event, trims text and generates its own metadata', async () => {
-  const payload = { title: 'Git Atölyesi', category: 'Atölye', date: '2026-11-19', capacity: 30, time: '14:00', location: 'Bilgisayar Laboratuvarı 1', description: 'Git ve GitHub ile ilk adımlar.' };
+  const payload = { title: 'Git Atölyesi', category: 'Atölye', date: '19-11-2026', capacity: 30, time: '14:00', location: 'Bilgisayar Laboratuvarı 1', description: 'Git ve GitHub ile ilk adımlar.' };
   const clientId = new mongoose.Types.ObjectId().toString();
   const created = await request('/events', { ...payload, _id: clientId, title: ' Git Atölyesi ', createdAt: '2000-01-01' });
   assert.equal(created.status, 201);
@@ -97,7 +97,7 @@ test('POST creates a retrievable event, trims text and generates its own metadat
 
 test('schema errors return 400 without insertion and health remains available', async () => {
   const count = (await request('/events')).body.length;
-  const valid = { title: 'Etkinlik', category: 'Atölye', date: '2026-12-01' };
+  const valid = { title: 'Etkinlik', category: 'Atölye', date: '01-12-2026' };
   const invalidPayloads = [
     { title: 'Eksik' }, {}, [valid, valid], { ...valid, title: ' ' }, { ...valid, title: 123 },
     { ...valid, title: 'X' }, { ...valid, title: 'a'.repeat(101) }, { ...valid, category: 'Parti' },
@@ -113,7 +113,7 @@ test('schema errors return 400 without insertion and health remains available', 
 });
 
 test('optional fields default correctly and rapid creation never duplicates IDs', async () => {
-  const results = await Promise.all(Array.from({ length: 10 }, () => request('/events', { title: 'Yeni', category: 'Seminer', date: '2026-12-01' })));
+  const results = await Promise.all(Array.from({ length: 10 }, () => request('/events', { title: 'Yeni', category: 'Seminer', date: '01-12-2026' })));
   assert.equal(new Set(results.map((result) => result.body._id)).size, 10);
   for (const { status, body } of results) {
     assert.equal(status, 201);
@@ -137,4 +137,20 @@ test('CORS permits frontend requests and preflight', async () => {
   const preflight = await fetch(base + '/events', { method: 'OPTIONS', headers: { Origin: 'http://localhost:5173', 'Access-Control-Request-Method': 'POST', 'Access-Control-Request-Headers': 'content-type' } });
   assert.equal(preflight.status, 204);
   assert.match(preflight.headers.get('access-control-allow-methods'), /POST/);
+});
+
+test('PATCH trims the title in both the response and the stored event', async () => {
+  const created = await request('/events', {
+    title: 'İlk Başlık', category: 'Seminer', date: '01-12-2026',
+  });
+  assert.equal(created.status, 201);
+  const path = '/events/' + created.body._id;
+
+  const updated = await request(path, { title: '  Yeni Başlık  ' }, 'PATCH');
+  assert.equal(updated.status, 200);
+  assert.equal(updated.body.title, 'Yeni Başlık');
+
+  const saved = await request(path);
+  assert.equal(saved.status, 200);
+  assert.equal(saved.body.title, 'Yeni Başlık');
 });
