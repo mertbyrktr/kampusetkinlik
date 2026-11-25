@@ -1,4 +1,4 @@
-# Kampüs Etkinlikleri · Sprint 8
+# Kampüs Etkinlikleri · Sprint 9
 
 Ahmet Mert Bayraktar · 2321032070
 
@@ -6,7 +6,7 @@ Ahmet Mert Bayraktar · 2321032070
 
 React, TypeScript ve Vite uygulaması `frontend/` klasöründedir. Sprint 6 kapsamında React Router ile 10 route, ortak EventsContext, etkinlik yönetimi ve form doğrulama tamamlanmıştır.
 
-## Sprint 8 · MongoDB ve Mongoose
+## Sprint 9 · Tam CRUD ve sorgular
 
 `backend/` altındaki Express API, etkinlikleri Mongoose ile MongoDB'nin `events` koleksiyonunda saklar. Şema başlık, kategori ve tarih alanlarını zorunlu tutar. Etkinlik yanıtlarında MongoDB `_id` değeri ile `createdAt` ve `updatedAt` zaman damgaları bulunur. POST ile eklenen kayıtlar sunucu yeniden başlatıldığında korunur.
 
@@ -32,18 +32,20 @@ API varsayılan olarak `http://localhost:3000` adresinde çalışır.
 
 Örnek verilerle başlamak için test veritabanına bağlıyken `backend/` klasöründe `npm run seed` çalıştır. **Seed, hedef veritabanındaki etkinlikleri silip altı örnek kayıt ekler.** İkinci çalıştırmada da toplam altı kayıt kalır.
 
-Postman’de [Kampüs API koleksiyonunu](backend/requests/kampus-api.json) içe aktar ve istekleri tablodaki sırayla gönder. Liste isteği, detay isteğinde kullanılacak `_id` değerini otomatik ayarlar.
+Postman’de [Sprint 9 koleksiyonunu](backend/requests/kampus-api.json) içe aktar ve **Run collection** ile çalıştır. 25 Kasım 2026 tarihli Newman çalıştırmasında 18 istek tamamlandı ve 45 doğrulamanın tamamı geçti. [Çalıştırma raporu](backend/requests/run-results.json)
 
-| İstek | Beklenen sonuç |
+| İstek | API sözleşmesi |
 | --- | --- |
-| `GET /health` | 200, öğrenci numarası `2321032070` |
-| `GET /events` | 200, seed’in hemen ardından 6 etkinlik |
-| `GET /events/:id` | 200, listeden alınan `_id` ile etkinlik detayı |
-| `GET /events/yok` | 404. Biçimi geçerli olup bulunamayan bir `_id` de 404 döner. |
-| `POST /events` · Geçerli gövde | 201, yeni etkinlik ve MongoDB `_id` değeri |
-| `POST /events` · Yalnızca başlık | 400. Bu isteğin ardından `GET /health` 200 dönmeye devam eder. |
+| `GET /health` | 200, öğrenci numarası ve sunucu zamanı |
+| `GET /events` | 200, tarih sıralı liste |
+| `GET /events?search=atölye&category=Atölye` | 200, başlık araması ve kategori filtresi |
+| `GET /events/upcoming` | 200, UTC ile bugünden itibaren tarih ve saat sıralı liste |
+| `GET /events/:id` | 200, etkinlik detayı veya 404 |
+| `POST /events` | 201, yeni etkinlik veya doğrulama hatasında 400 |
+| `PATCH /events/:id` | 200, güncel etkinlik. Geçersiz gövde için 400, bulunamayan etkinlik için 404 |
+| `DELETE /events/:id` | 204, boş gövde veya bulunamayan etkinlik için 404 |
 
-Kalıcılığı kontrol etmek için başarılı POST yanıtındaki `_id` değerini al. Backend’i yeniden başlat ve aynı kimlikle detay isteğinin 200 döndüğünü doğrula. Otomatik testler `backend/` klasöründe `npm test` ile çalışır. Kurulum ayrıntıları ve API sözleşmesi [backend README](backend/README.md) dosyasında.
+Etkinlik tarihleri `GG-AA-YYYY` biçimindedir. Otomatik testleri, Newman komutunu ve sonuç dosyasının konumunu [backend README](backend/README.md) dosyasında bulabilirsin.
 
 ## Frontend kurulumu
 
@@ -80,6 +82,6 @@ Etkinlik formu: ad en az 3 karakter, kategori seçili, tarih/saat/yer dolu, kont
 
 Root Directory: `frontend`, Framework Preset: `Vite`, Build Command: `npm run build`, Output Directory: `dist`. `frontend/vercel.json` alt adreslerin doğrudan açılması ve yenilenmesi için SPA yönlendirmesini içerir.
 
-Vercel’de yayımlanan frontend, etkinlik listesini kendi başlangıç verisinden oluşturur. Sprint 8’in MongoDB ve Postman kontrolleri yerel backend adresinde yapılır.
+Vercel’de yayımlanan frontend, etkinlik listesini kendi başlangıç verisinden oluşturur. Sprint 9 kapsamındaki MongoDB ve Postman kontrolleri yerel backend adresinde yapılır.
 
 Önceki sprintler `sprint1/`, `sprint2/` ve `sprint3/` klasörlerinde korunmuştur. Güncel dosya yapısı için [frontend README](frontend/README.md).

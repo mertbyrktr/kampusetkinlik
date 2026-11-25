@@ -1,4 +1,4 @@
-# Kampüs Etkinlikleri API · Sprint 8
+# Kampüs Etkinlikleri API · Sprint 9
 
 Ahmet Mert Bayraktar · **2321032070**
 
@@ -33,10 +33,14 @@ API varsayılan olarak `http://localhost:3000` adresinde çalışır. `PORT` de�
 | --- | --- | --- |
 | GET | `/health` | 200, `status`, ISO zaman ve `student: "2321032070"` |
 | GET | `/events` | 200, tarihe göre artan sırada etkinlik dizisi |
+| GET | `/events?search=atölye&category=Atölye` | 200, başlıkta harf büyüklüğünden bağımsız arama ve tam kategori eşleşmesi. İki filtre ayrı ayrı da kullanılabilir |
+| GET | `/events/upcoming` | 200, UTC ile bugün ve sonrasındaki etkinlikler, önce tarihe sonra saate göre artan sırada |
 | GET | `/events/:id` | 200, etkinlik. Geçersiz ve bulunamayan `_id` için 404 |
 | POST | `/events` | 201, MongoDB `_id` ve zaman damgalarıyla yeni etkinlik. Doğrulama hatasında 400 |
+| PATCH | `/events/:id` | 200, güncellenmiş kayıt. Boş gövde, korunan alan veya doğrulama hatası için 400, bulunamayan etkinlik için 404 |
+| DELETE | `/events/:id` | 204, boş gövde. Geçersiz veya silinmiş kimlik için 404 |
 
-Listeyi kategoriye göre filtrelemek için `/events?category=At%C3%B6lye` kullan. Eşleşme yoksa yanıt boş dizidir. Her kayıtta `_id`, `createdAt` ve `updatedAt` bulunur.
+Etkinlik tarihi API'de `GG-AA-YYYY` biçimindedir ve MongoDB'de Date olarak saklanır. PATCH sadece gönderilen alanları günceller. `_id`, `createdAt`, `updatedAt` ve `__v` alanları korunur.
 
 POST gövdesi örneği:
 
@@ -45,7 +49,7 @@ POST gövdesi örneği:
   "title": "Git Atölyesi",
   "category": "Atölye",
   "capacity": 30,
-  "date": "2026-12-01",
+  "date": "01-12-2026",
   "time": "14:00",
   "location": "Bilgisayar Laboratuvarı 1",
   "description": "Git ve GitHub ile ilk adımlar."
@@ -58,6 +62,10 @@ POST gövdesi örneği:
 
 Yerel MongoDB çalışırken `npm test` komutunu kullan. MongoDB farklı bir yerel porttaysa örneğin `MONGODB_TEST_URI=mongodb://127.0.0.1:27018 npm test` komutunu çalıştır. Testler kendi geçici veritabanlarını oluşturup temizler.
 
-Postman'de [Kampüs API koleksiyonunu](requests/kampus-api.json) içe aktar. Test veritabanında seed çalıştırdıktan sonra altı isteği sırayla çalıştır. Liste isteği, ilk etkinliğin `_id` değerini detay isteğine aktarır. Son POST isteğinden sonra `/health` yine 200 dönmelidir.
+Postman’de [koleksiyonu](requests/kampus-api.json) içe aktar. Seed yüklenmiş test veritabanıyla API çalışırken **Run collection** seçeneğiyle 18 isteği sırayla çalıştır. Koleksiyon oluşturduğu kaydı günceller ve siler. Beklenen sonuç 45 başarılı testtir.
 
-Kalıcılığı elle kontrol etmek için 201 dönen POST yanıtındaki `_id` değerini al, API'yi yeniden başlat ve aynı kimlikle detay isteği yap. Seed sonrası altı kayıtla başladıysan listede artık yedi kayıt görünür.
+Ders koleksiyonunu Newman ile çalıştırıp sonucu kaydetmek için `backend/` içinde:
+
+```sh
+npx newman run https://webdersi.vercel.app/test.json -r cli,json --reporter-json-export requests/run-results.json
+```
